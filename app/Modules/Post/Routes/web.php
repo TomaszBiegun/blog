@@ -11,8 +11,17 @@
 |
 */
 
-Route::group(['prefix' => 'post'], function () {
-    Route::get('/', function () {
-        dd('This is the Post module index page. Build something great!');
-    });
+Route::group(['prefix' => 'post', 'middleware' => ['auth', 'admin']], function () {
+    Route::delete('/{id}', 'PostController@destroy')->name('post.destroy');
 });
+
+Route::resource('post', 'PostController', [
+    'middleware' => ['auth'],
+    'except' => ['destroy']
+]);
+
+Route::group(['prefix' => 'like', 'middleware' => ['auth']], function () {
+    Route::post('/', 'LikeController@store')->name('like.store');
+    Route::delete('/{id}', 'LikeController@destroy')->name('like.destroy');
+});
+
