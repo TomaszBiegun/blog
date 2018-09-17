@@ -13,7 +13,7 @@ class User extends Authenticatable
     /**
      * System role User
      */
-    const ROLE_UESR = 0;
+    const ROLE_USER = 0;
 
     /**
      * System role Admin
@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'surname', 'email', 'password',
     ];
 
     /**
@@ -39,6 +39,14 @@ class User extends Authenticatable
     ];
 
     /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Check if user role is Admin
      *
      * @return bool
@@ -47,4 +55,72 @@ class User extends Authenticatable
     {
         return $this->role == self::ROLE_ADMIN ? true : false;
     }
+
+    /**
+     * Set user system role
+     *
+     * @param int $role
+     * @return $this
+     */
+    public function setRole($role)
+    {
+        $this->role = (int)$role;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = (string)$name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
+    /**
+     * @param string $surname
+     * @return $this
+     */
+    public function setSurname($surname)
+    {
+        $this->surname = (string)$surname;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullname()
+    {
+        return $this->getName() . ' ' . $this->getSurname();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts()
+    {
+        return $this->hasMany('App\Modules\Post\Models\Post', 'user_id');
+    }
+
 }
