@@ -1,0 +1,6 @@
+{
+    "name": "Post",
+    "slug": "post",
+    "version": "1.0",
+    "description": "Posts of the blog"
+}
