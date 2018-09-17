@@ -38,7 +38,7 @@
                                         <td>{{$post->getId()}}</td>
                                         <td>{{$post->user->getName()}}</td>
                                         <td>{{$post->user->getSurname()}}</td>
-                                        <td>{{substr($post->getContent(),0,20).'...'}}</td>
+                                        <td>{{strlen($post->getContent()) > 20 ? substr($post->getContent(),0,20).'...' : $post->getContent()}}</td>
                                         <td>{{$post->getCreatedAt()->format('Y-m-d H:i')}}</td>
                                         <td>
                                             @php($like = $post->like())

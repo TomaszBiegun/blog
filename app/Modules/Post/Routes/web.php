@@ -25,3 +25,7 @@ Route::group(['prefix' => 'like', 'middleware' => ['auth']], function () {
     Route::delete('/{id}', 'LikeController@destroy')->name('like.destroy');
 });
 
+Route::group(['prefix' => 'comment', 'middleware' => ['auth']], function () {
+    Route::post('/', 'CommentController@store')->name('comment.store');
+});
+
