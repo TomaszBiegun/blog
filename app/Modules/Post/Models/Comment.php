@@ -6,10 +6,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Post
+ * Class Comment
  * @package App\Modules\Post\Models
  */
-class Post extends Model
+class Comment extends Model
 {
     /**
      * @return int
@@ -20,22 +20,41 @@ class Post extends Model
     }
 
     /**
-     * @param int $id
+     * @param int $userId
      * @return $this
      */
-    public function setId($id)
+    public function setUserId($userId)
     {
-        $this->id = (int)$id;
+        $this->user_id = (int)$userId;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getContent()
+    public function getUserId()
     {
-        return $this->content;
+        return $this->user_id;
+    }
+
+    /**
+     * @param int $postId
+     * @return $this
+     */
+    public function setPostId($postId)
+    {
+        $this->post_id = (int)$postId;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPostId()
+    {
+        return $this->post_id;
     }
 
     /**
@@ -50,22 +69,11 @@ class Post extends Model
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getUserId()
+    public function getContent()
     {
-        return $this->user_id;
-    }
-
-    /**
-     * @param int $userId
-     * @return $this
-     */
-    public function setUserId($userId)
-    {
-        $this->user_id = (int)$userId;
-
-        return $this;
+        return $this->content;
     }
 
     /**
@@ -82,22 +90,6 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');
-    }
-
-    public function likes()
-    {
-        return $this->hasMany('App\Modules\Post\Models\Like', 'post_id');
-    }
-
-    public function like()
-    {
-        return $this->likes->where('user_id', auth()->user()->id)->first();
-    }
-
-
-    public function comments()
-    {
-        return $this->hasMany('App\Modules\Post\Models\Comment', 'post_id');
     }
 
 }
